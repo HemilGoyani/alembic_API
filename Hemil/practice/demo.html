@@ -1,0 +1,253 @@
+<html>
+
+<head>
+    head>
+        <title> Add Rows To HTML Table From Array </title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            table, th, td {
+              border: 1px solid black;
+            }
+        </style>
+    </head>
+</head>
+
+<body id="body" onload="display()">
+    <div>
+        <table>
+            <tr>
+            <td>Name:</td>
+            <td><input type="text" id = "txtName"></td>
+            </tr>
+            <tr>
+            <td>Email:</td>
+            <td><input type="text" id = "txtEmail"></td>
+            </tr>
+            <tr>
+                <td>Gender:</td>
+                <td><input type="radio" name="male"/> Male <input type="radio" name="female"/> Female 
+            </tr>
+            <tr>
+                <td>Hobbies:</td>
+                <td><input type="checkbox" name = "Reading">Reading<input type="checkbox" name = "Reading">Traveling<input type="checkbox" name = "Reading">Sport</td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td><input type="text" id = "txtAge"></td>
+            </tr>
+            <tr>
+                <td>Countries:</td>
+                <td>
+                    <select name="country" id="countyList">
+                        <option value="" selected="selected">Select Country</option>
+                    </select>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>State:</td>
+                <td>
+                    <select name="state" id="stateList">
+                        <option value="" selected="selected">Select State</option>
+                    </select>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td>
+                    <select name="city" id="cityList">
+                        <option value="" selected="selected">Select City</option>
+                    </select>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button id = "btnSubmit">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="wrapper">
+        <table align='center' cellspacing=1 cellpadding=1 id="mytable" border=1>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Hobbies</th>
+                    <th>Age</th>
+                    <th>Coutry</th>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    var myArray = [{ "name": "aaa", "email": "hello@gmail.com","gender":"male","hobbies":"traveling","age":"22","country":"india","state":"gujarat","city":"surat"},
+                   {"name": "aaa", "email": "hello@gmail.com","gender":"male","hobbies":"traveling","age":"22","country":"india","state":"gujarat","city":"surat"},
+                   {"name": "aaa", "email": "hello@gmail.com","gender":"male","hobbies":"traveling","age":"22","country":"india","state":"gujarat","city":"surat"}];
+
+                    function display() {
+                        var length = myArray.length;
+                        var htmltext = "";
+
+                        for (var i = 0; i < length; i++) {
+                            console.log(myArray[i]);
+                            htmltext += "<tr id='table"+i+"'><td>"
+                            +myArray[i].name+
+                            "</td><td>"
+                            +myArray[i].email+
+                            "</td><td>"
+                            +myArray[i].gender+
+                            "</td><td>"
+                            +myArray[i].hobbies+
+                            "</td><td>"
+                            +myArray[i].age+
+                            "</td><td>"
+                            +myArray[i].country+
+                            "</td><td>"
+                            +myArray[i].state+
+                            "</td><td>"
+                            +myArray[i].city+
+                            "</td><td><button onclick='edit("+i+")'>Edit</button><button onclick='remove("+i+")'>Remove</button></td></tr>";
+                        }
+                        document.getElementById("tbody").innerHTML = htmltext;
+                    }
+
+                    function edit(indice) {
+                        var htmltext = "<tr><td><input id='inputname"+indice+"' type='text' value='"
+                            +myArray[indice].name+
+                            "'></td><td><input id='inputlevel"+indice+"' type='text' value='"
+                            +myArray[indice].email+
+
+                            "'></td><td><input id='inputlevel"+indice+"' type='text' value='"
+                            +myArray[indice].gender+
+
+                            "'></td><td><input id='inputlevel"+indice+"' type='text' value='"
+                            +myArray[indice].hobbies+
+
+                            "'></td><td><input id='inputlevel"+indice+"' type='text' value='"
+                            +myArray[indice].age+
+
+                            "'></td><td><input id='inputlevel"+indice+"' type='text' value='"
+                            +myArray[indice].country+
+
+                            "'></td><td><input id='inputlevel"+indice+"' type='text' value='"
+                            +myArray[indice].state+
+
+                            "'></td><td><input id='inputlevel"+indice+"' type='text' value='"
+                            +myArray[indice].city+
+                            "'></td><td><button onclick='save("+indice+")'>Save</button><button onclick='remove("+indice+")'>Remove</button></td></tr>";
+                        document.getElementById("table"+indice).innerHTML = htmltext; 
+                    }
+
+
+                    function save(indice) {
+                        myArray[indice].name = document.getElementById("inputname"+indice).value;
+                        myArray[indice].level = document.getElementById("inputlevel"+indice).value;
+                        var htmltext = "<tr id='table"+indice+"'><td>"
+                            +myArray[indice].name+
+                            "</td><td>"
+                            +myArray[indice].email+
+                            "</td><td>"
+                            +myArray[indice].gender+
+                            "</td><td>"
+                            +myArray[indice].level+
+                            "</td><td>"
+                            +myArray[indice].level+
+                            "</td><td>"
+                            +myArray[indice].level+
+                            "</td><td>"
+                            +myArray[indice].level+
+                            "</td><td>"
+                            +myArray[indice].level+
+                            "</td><td><button onclick='edit("
+                            +indice+")'>Edit</button><button onclick='remove("
+                            +indice+")'>Remove</button></td></tr>";
+                        document.getElementById("table"+indice).innerHTML = htmltext;
+                    }
+
+                    function remove(indice) {
+                        console.log(myArray);
+                        myArray.splice(indice, 1);
+                        display();
+                    }
+                    table = document.getElementById("table");
+            
+            
+                    for(var i = 0; i < array.length; i++)
+                    {
+                        
+                        var newRow = table.insertRow(table.length);
+                        for(var j = 0; j < array[i].length; j++)
+                        {
+                            
+                            var cell = newRow.insertCell(j);
+                            
+                            
+                            cell.innerHTML = array[i][j];
+                        }
+                    }
+                    window.onload = function(){
+                        alert("loaded");
+                    }
+                    var worldData = {
+                        USA: {
+                            California: ["Los Angeles", "San Diego", "Sacramento"],
+                            Texas: ["Houston", "Austin"],
+                            Florida: ["Miami", "Orlando", "Tampa"],
+                        },
+                        India: {
+                            Maharashtra: ["Mumbai", "Pune", "Nagpur"],
+                            TamilNadu: ["Chennai", "Madurai"],
+                            Karnataka: ["Bangalore", "Mangalore"],
+                        },
+                        Canada: {
+                            Alberta: ["Calgary", "Edmonton", "Red Deer"],
+                            BritishColumbia: ["Vancouver", "Kelowna"],
+                            Manitoba: ["Winnipeg", "Brandon"],
+                        },
+                        Germany: {
+                            Bavaria: ["Munich", "Nuremberg"],
+                            NorthRhine: ["Cologne", "Düsseldorf"],
+                        },
+                    };
+                    window.onload = function () {
+                        var countyList = document.getElementById("countyList"),
+                            stateList = document.getElementById("stateList"),
+                            cityList = document.getElementById("cityList");
+                        for (var country in worldData) {
+                            countyList.options[countyList.options.length] = new Option(country, country);
+                        }
+                        countyList.onchange = function () {
+                            stateList.length = 1;
+                            cityList.length = 1;
+                            if (this.selectedIndex < 1) return;
+                            for (var state in worldData[this.value]) {
+                                stateList.options[stateList.options.length] = new Option(state, state);
+                            }
+                        };
+                        countyList.onchange();
+                        stateList.onchange = function () {
+                            cityList.length = 1;
+                            if (this.selectedIndex < 1) return;
+                            var city = worldData[countyList.value][this.value];
+                            for (var i = 0; i < city.length; i++) {
+                                cityList.options[cityList.options.length] = new Option(city[i], city[i]);
+                            }
+                        };
+                    };
+</script>

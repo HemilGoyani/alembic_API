@@ -1,0 +1,290 @@
+var myArray = [{ "name": "Tejas", "email": "Tejas@gmail.com", "gender": "male", "hobbies": "Traveling", "age": "2011-12-17", "country": "India", "state": "Delhi", "city": "new Delhi" },
+{ "name": "Manish", "email": "Manish@gmail.com", "gender": "female", "hobbies": "Sport,Reading", "age": "2008-08-15", "country": "India", "state": "Delhi", "city": "new Delhi" },
+{ "name": "Sanjay", "email": "Sanjay@gmail.com", "gender": "male", "hobbies": "Sport", "age": "2004-06-19", "country": "India", "state": "Delhi", "city": "new Delhi" }];
+
+var i;// i meance index
+buildTable(myArray);
+console.log(myArray);
+
+
+function buildTable(data, length = 1) {
+
+    var table = document.querySelector(".myTable");
+    console.log(data);
+    for (i = length - 1; i < data.length; i++) {
+        let age = (new Date()).getFullYear() - (new Date(data[i].age).getFullYear())
+        console.log(age);
+        var rows = `<tr>
+        <td>${data[i].name}</td>
+        <td>${data[i].email}</td>
+        <td>${data[i].gender}</td>
+        <td>${data[i].hobbies}</td>
+        <td>${age}</td>
+        <td>${data[i].country}</td>
+        <td>${data[i].state}</td>
+        <td>${data[i].city}</td>
+        <td><button onclick='onEdit(`+ i + `)'>Edit</button><button onclick='rowDelete(` + i + `)'>Delete</button></td>
+</tr>`
+        table.innerHTML += rows;
+    }
+}
+var checkedValue = [];
+var row;
+
+
+function getRadioValue(theRadioGroup) {
+    var elements = document.getElementsByName(theRadioGroup);
+    console.log(elements);
+    for (let i = 0, l = elements.length; i < l; i++) {
+        if (elements[i].checked) {
+            return elements[i].value;
+        }
+    }
+}
+
+function getCheckBox(thisCheckBoxGroup) {
+
+    var inputElements = document.getElementsByName(thisCheckBoxGroup);
+
+    for (let i = 0; inputElements[i]; ++i) {
+        if (inputElements[i].checked) {
+            checkedValue.push(inputElements[i].value);
+        }
+
+    } return checkedValue;
+}
+
+function savedata() {
+
+    if (document.querySelector(".btnSubmit").innerHTML == "Submit") {
+
+        let inserData = readData();
+        console.log(inserData);
+        myArray.push(inserData);
+        console.log(myArray);
+        buildTable(myArray, myArray.length);
+        myResetFun();
+        var date = new Date();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var year = date.getFullYear();
+
+        var formattedDate = day + "-" + month + "-" + year + "  " + date.toLocaleTimeString();
+        console.log(formattedDate);
+        document.querySelector(".lblTime").innerHTML = formattedDate;
+    }
+    else {
+
+        let inserData = readData();
+        update(inserData, i);
+
+        myResetFun();
+    }
+
+
+}
+
+function readData() {
+
+    console.log("readdata");
+    var coutries = document.querySelector(".countySel");
+    var states = document.querySelector(".stateSel");
+    var cities = document.querySelector(".districtSel");
+
+    var values = {
+        "name": document.forms.name.value,
+        "email": document.forms.email.value,
+        "gender": getRadioValue('gender'),
+        "hobbies": getCheckBox("hobbies"),
+        "age": document.forms.age.value,
+        "country": coutries.options[coutries.selectedIndex].text,
+        "state": states.options[states.selectedIndex].text,
+        "city": cities.options[cities.selectedIndex].text
+    }
+    return values;
+}
+var stateObject = objCountries;
+window.onload = function () {
+    var countySel = document.querySelector(".countySel"),
+        stateSel = document.querySelector(".stateSel"),
+        districtSel = document.querySelector(".districtSel");
+    for (var country of stateObject) {
+        countySel.options[countySel.options.length] = new Option(country.name, country.name);
+    }
+    countySel.onchange = function () {
+        stateSel.length = 1;
+        districtSel.length = 1;
+        if (this.selectedIndex < 1) return;
+        for (var j of stateObject[countySel.selectedIndex].states) {
+            stateSel.options[stateSel.options.length] = new Option(j.name, j.name);
+        }
+    }
+    countySel.onchange();
+    stateSel.onchange = function () {
+        districtSel.length = 1;
+        if (this.selectedIndex < 1) return;
+        for (var k of country.states[stateSel.selectedIndex].cities) {
+            districtSel.options[districtSel.options.length] = new Option(k.name, k.name);
+        }
+    }
+}
+
+function rowDelete(i) {
+    if (confirm('Are you sure to delete this record ?')) {
+        myArray.splice(i, 1);
+        console.log(myArray);
+        document.querySelector(".myTable").innerHTML = "";
+        buildTable(myArray);
+    }
+}
+
+function onEdit(i) {
+    myResetFun();
+    document.querySelector(".btnSubmit").innerHTML = "Update";
+
+    var selectedRow = myArray[i];
+    console.log(selectedRow, "onEdit");
+
+    document.forms.name.value = selectedRow.name;
+    document.forms.email.value = selectedRow.email;
+    var gen = selectedRow.gender;
+    if (gen == "male") {
+        document.querySelector(".male").checked = true;
+    }
+    else {
+        document.querySelector(".female").checked = true;
+    }
+    let hobby = selectedRow.hobbies;
+    console.log(hobby);
+    if (hobby.indexOf("Reading") > -1) {
+        document.querySelector(".chkReading").checked = true;
+    }
+    if (hobby.indexOf("Traveling") > -1) {
+        document.querySelector(".chkTraveling").checked = true;
+    }
+    if (hobby.indexOf("Sport") > -1) {
+        document.querySelector(".chkSport").checked = true;
+    }
+
+    document.forms.age.value = selectedRow.age;
+    document.querySelector(".countySel").value = selectedRow.country;
+    countySel.onchange()
+    document.querySelector(".stateSel").value = selectedRow.state;
+    stateSel.onchange()
+    document.querySelector(".districtSel").value = selectedRow.city;
+}
+function update(values, i) {
+    console.log("update function");
+    for (let x in myArray[i - 1]) {
+        myArray[i - 1][x] = values[x];
+        console.log(myArray[i - 1][x]);
+    }
+    console.log(myArray);
+
+    myResetFun();
+    document.querySelector(".myTable").innerHTML = "";
+    buildTable(myArray);
+}
+function myResetFun() {
+    document.forms.name.value = "";
+    document.forms.email.value = "";
+    var ele = document.getElementsByName("gender");
+    for (var i = 0; i < ele.length; i++)
+        ele[i].checked = false;
+    var clist = document.getElementsByName("hobbies");
+    for (var i = 0; i < clist.length; ++i) { clist[i].checked = false; }
+    document.forms.age.value = "";
+    document.querySelector(".countySel").value = "";
+    document.querySelector(".stateSel").value = "";
+    document.querySelector(".stateSel").value = "";
+    document.querySelector(".btnSubmit").innerHTML = "Submit";
+
+}
+
+function mySearchText() {
+    var input, filter, table, tr, td, i;
+    input = document.querySelector(".searchText");
+    filter = input.value.toUpperCase();
+    table = document.querySelector(".myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[i];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+  }
+
+function validateForm() {
+    let name = document.forms.name.value;
+    let email = document.forms.email.value;
+    let age = document.forms.age.value;
+    let coutry = document.querySelector(".countySel");
+    if (name == '') {
+
+        document.forms.nameValid.innerHTML = 'fill the name';
+        return false;
+    }
+    else {
+        savedata();
+    }
+
+}
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.querySelector(".myTable");
+    switching = true;
+    dir = "asc"; 
+    while (switching) {
+
+      switching = false;
+      rows = table.rows;
+      for (i = 1; i < (rows.length - 1); i++) {
+
+        shouldSwitch = false;
+
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+
+        switchcount ++;      
+      } else {
+
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
+
+
+
+
+
+
+

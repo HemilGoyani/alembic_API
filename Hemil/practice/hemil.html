@@ -1,0 +1,100 @@
+<html>
+    <head>
+       
+    </head>
+    <body>
+        <form id="empForm">
+        <table border="1px">
+           
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" id = "txtName" name = "name"></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="email" id = "txtEmail" name = "email"></td>
+                </tr>
+                <tr>
+                        <td>Gender:</td>
+                        <td><input type="radio" id="female" name="gender" value="female" ><label for="female" class="abc">Female</label>
+                            <input type="radio" id="male" name="gender" value="male"><label for="male" class="abc">Male</label>
+                        </td>
+                </tr>
+                <tr>
+                        <td>Hobbies:</td>
+                        <td><input type="checkbox" value="Reading" name="hobbies" id="chkReading"  class="chk" /><label for="Reading">Reading</label>
+                            <input type="checkbox" value="Traveling" name="hobbies" id="chkTraveling" class="chk" /><label for="Traveling">Traveling</label>
+                            <input type="checkbox" value="Sport" name="hobbies" id="chkSport" class="chk" /><label for="Sport">Sport</label>
+                        </td>
+                </tr>
+                <tr>
+                        <td>Age:</td>
+                        <td><input type="text" id = "txtAge"></td>
+                </tr>
+                <tr>
+                        <td>Countries:</td>
+                        <td>
+                            <select name="state" id="countySel" size="1">
+                                <option value="" selected="selected">Select Country</option>
+                            </select>
+                            
+                        </td>
+                </tr>
+                <tr>
+                        <td>State:</td>
+                        <td>
+                            <select name="countrya" id="stateSel" size="1">
+                                <option value="" selected="selected">select State</option>
+                            </select>
+                            
+                        </td>
+                </tr>
+                <tr>
+                        <td>City:</td>
+                        <td>
+                            <select name="district" id="districtSel" size="1">
+                                <option value="" selected="selected">select city</option>
+                            </select>
+                            
+                        </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button onclick="event.preventDefault();validateForm();savedata();" id="btnSubmit">Submit</button>
+                        <button onclick="myResetFun()">Cancel</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+            
+        
+        </br></br></br>     
+
+        <label id = "lblTime"><b>Array creation time</b></label>&nbsp;&nbsp;
+        &nbsp;    <input type="text" id="myInput" onkeyup="mySearchFunction()" placeholder="Search for names..">
+        &nbsp;&nbsp;&nbsp;<button onclick="sortTable()">Sort Table</button>
+        
+
+                
+        <table border="1">
+            
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Hobbies</th>
+                    <th>Age</th>
+                    <th>Coutry</th>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Action</th>
+                </tr>
+            
+            <tbody id="myTable">
+
+            </tbody>  
+        </table>  
+        <script type="text/javascript" src="hemil.js"></script>
+    </body>
+</html>
+        
