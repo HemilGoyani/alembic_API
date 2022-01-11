@@ -1,8 +1,8 @@
 from logging.config import fileConfig
-
+import os
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
+from crud_operastion.databse import Base
 from alembic import context
 
 # this is the Alembic Config object, which provides
@@ -17,7 +17,10 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+
+target_metadata = Base.metadata
+
+config.set_main_option('sqlalchemy.url', "postgresql://postgres:password@localhost:5432/test")
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
