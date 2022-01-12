@@ -2,8 +2,8 @@ from logging.config import fileConfig
 import os
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from crud_operastion.databse import Base
 from alembic import context
+from crud_operastion.model import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,7 +19,6 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 
 target_metadata = Base.metadata
-
 config.set_main_option('sqlalchemy.url', "postgresql://postgres:password@localhost:5432/test")
 
 # other values from the config, defined by the needs of env.py,
